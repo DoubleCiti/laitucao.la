@@ -14,19 +14,19 @@ import java.util.Map;
 
 @Controller
 @RequestMapping(value="/")
-public class WelcomeController {
+public class PostController {
     @Autowired
     private PostRepository postRepository;
 
-    @RequestMapping(value="/welcome", method=RequestMethod.GET)
-    public String welcome(Map<String, Object> model) {
+    @RequestMapping(value="/", method=RequestMethod.GET)
+    public String index(Map<String, Object> model) {
         model.put("postList", postRepository.findAll());
-        return "welcome";
+        return "posts/index";
     }
 
     @RequestMapping(value="/create", method=RequestMethod.GET)
     public String create_get(Map<String, Object> model) {
-        return "create";
+        return "posts/create";
     }
 
     @RequestMapping(value="/create", method=RequestMethod.POST)
@@ -39,6 +39,6 @@ public class WelcomeController {
     @RequestMapping(value="/view/{id}", method = RequestMethod.GET)
     public String view(@PathVariable String id, Map<String, Object> model) {
         model.put("post", postRepository.findOne(id));
-        return "view";
+        return "posts/view";
     }
 }

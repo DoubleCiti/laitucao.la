@@ -1,4 +1,4 @@
-<#import "layout.ftl" as layout />
+<#import "../layout.ftl" as layout />
 <@layout.application title="Welcome">
 <#list postList as post>
     <div>
