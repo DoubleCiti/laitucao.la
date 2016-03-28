@@ -13,30 +13,26 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.Map;
 
 @Controller
-@RequestMapping(value="/")
+@RequestMapping(value="/posts")
 public class PostController {
     @Autowired
     private PostRepository postRepository;
 
     @RequestMapping(value="/", method=RequestMethod.GET)
-    public String index(Map<String, Object> model) {
-        model.put("postList", postRepository.findAll());
-        return "posts/index";
-    }
-
-    @RequestMapping(value="/create", method=RequestMethod.GET)
     public String create_get(Map<String, Object> model) {
         return "posts/create";
     }
 
-    @RequestMapping(value="/create", method=RequestMethod.POST)
-    public String create_post(@ModelAttribute Post post, BindingResult result, Map<String, Object> model) {
+    @RequestMapping(value="/", method=RequestMethod.POST)
+    public String create_post(@ModelAttribute Post post,
+                              BindingResult result,
+                              Map<String, Object> model) {
         Post newPost = new Post(post.getLink());
         postRepository.save(newPost);
         return "redirect:/view/" + newPost.getId();
     }
 
-    @RequestMapping(value="/view/{id}", method = RequestMethod.GET)
+    @RequestMapping(value="/{id}", method = RequestMethod.GET)
     public String view(@PathVariable String id, Map<String, Object> model) {
         model.put("post", postRepository.findOne(id));
         return "posts/view";
