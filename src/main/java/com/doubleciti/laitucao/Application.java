@@ -5,8 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration;
 
 @SpringBootApplication
-public class DevToolsApplication extends WebMvcAutoConfiguration.WebMvcAutoConfigurationAdapter {
+public class Application extends WebMvcAutoConfiguration.WebMvcAutoConfigurationAdapter {
 	public static void main(String[] args) {
-		SpringApplication.run(DevToolsApplication.class, args);
+		SpringApplication.run(Application.class, args);
 	}
 }

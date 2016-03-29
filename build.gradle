@@ -6,7 +6,8 @@ buildscript {
 		mavenCentral()
 	}
 	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}") 
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath 'org.springframework:springloaded:1.2.4.RELEASE'
 	}
 }
 
@@ -25,6 +26,10 @@ targetCompatibility = 1.8
 
 repositories {
 	mavenCentral()
+}
+
+bootRun {
+	addResources = true
 }
 
 configurations {
@@ -46,8 +51,4 @@ eclipse {
 		 containers.remove('org.eclipse.jdt.launching.JRE_CONTAINER')
 		 containers 'org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8'
 	}
-}
-
-task wrapper(type: Wrapper) {
-	gradleVersion = '2.12'
 }
