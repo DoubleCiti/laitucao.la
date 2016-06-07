@@ -1,4 +1,5 @@
 # laitucao.la
+[![Build Status](https://travis-ci.org/DoubleCiti/laitucao.la.svg?branch=master)](https://travis-ci.org/DoubleCiti/laitucao.la)
 
 ## Road map
 
