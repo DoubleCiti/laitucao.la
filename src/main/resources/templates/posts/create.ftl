@@ -1,4 +1,4 @@
-<#import "../layout.ftl" as layout />
+<#import "../layout.html" as layout />
 <@layout.application title="发表吐槽">
 <div class="col-md-8">
     <h2>我要吐槽</h2>

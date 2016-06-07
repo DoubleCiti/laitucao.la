@@ -1,4 +1,4 @@
-<#import "../layout.ftl" as layout />
+<#import "../layout.html" as layout />
 <@layout.application title="注册新用户">
 <div class="col-md-8">
     <h2>注册新用户</h2>

@@ -1,4 +1,4 @@
-<#import "../layout.ftl" as layout />
+<#import "../layout.html" as layout />
 <@layout.application title="登录">
 <div class="col-md-8">
     <h2>登录</h2>
