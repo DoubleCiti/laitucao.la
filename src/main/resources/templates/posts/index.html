@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+    <title>${title}</title>
+</head>
+<body>
+    <div layout:fragment="content">
+        <div th:each="post : ${postList}">
+            <p><a href="/posts/1" th:href="@{/posts/{postId}(postId=${post.id})}" th:text="${post.link}">link to post</a></p>
+        </div>
+        <p><a href="/create" class="btn btn-default">我要吐槽</a></p>
+    </div>
+</body>
+</html>
