@@ -1,24 +1,30 @@
-package com.doubleciti.laitucao.entities;
+package com.doubleciti.laitucao.domain;
 
-import org.springframework.data.annotation.Id;
+import javax.persistence.*;
 
+@Entity
+@Table(name = "users")
 public class User {
-    @Id
-    private String id;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false, updatable = false)
+    private Long id;
+
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
+    @Column(name = "username", nullable = false, unique = true)
     private String username;
 
+    @Column(name = "password", nullable = false)
     private String password;
 
-    public User() {}
+    @Column(name = "role", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
-    public User(String email, String username, String password) {
-        this.email = email;
-        this.username = username;
-        this.password = password;
-    }
+    public User() {}
 
     public String getEmail() {
         return email;
@@ -44,12 +50,20 @@ public class User {
         this.password = password;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
     @Override
     public String toString() {
         return String.format("User[id=%s, email=%s]", id, email);
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public Role getRole() {
+        return role;
     }
 }

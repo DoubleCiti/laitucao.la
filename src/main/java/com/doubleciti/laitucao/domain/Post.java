@@ -1,14 +1,15 @@
-package com.doubleciti.laitucao.entities;
+package com.doubleciti.laitucao.domain;
 
-import org.springframework.data.annotation.Id;
+import javax.persistence.Id;
 
 public class Post {
+
     @Id
-    private String id;
+    private Long id;
 
     private String link;
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
