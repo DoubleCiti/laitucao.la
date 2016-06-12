@@ -1,8 +1,6 @@
-package com.doubleciti.laitucao.controllers;
+package com.doubleciti.laitucao.controller;
 
-import com.doubleciti.laitucao.entities.Post;
-import com.doubleciti.laitucao.repositories.PostRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.doubleciti.laitucao.domain.Post;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,10 +13,7 @@ import java.util.Map;
 @Controller
 @RequestMapping(value="/posts")
 public class PostController {
-    @Autowired
-    private PostRepository postRepository;
-
-    @RequestMapping(value="/", method=RequestMethod.GET)
+    @RequestMapping(value="", method=RequestMethod.GET)
     public String create_get(Map<String, Object> model) {
         return "posts/create";
     }
@@ -28,13 +23,13 @@ public class PostController {
                               BindingResult result,
                               Map<String, Object> model) {
         Post newPost = new Post(post.getLink());
-        postRepository.save(newPost);
+//        postRepository.save(newPost);
         return "redirect:/view/" + newPost.getId();
     }
 
     @RequestMapping(value="/{id}", method = RequestMethod.GET)
     public String view(@PathVariable String id, Map<String, Object> model) {
-        model.put("post", postRepository.findOne(id));
+//        model.put("post", postRepository.findOne(id));
         return "posts/view";
     }
 }
