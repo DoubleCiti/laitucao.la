@@ -1,6 +1,7 @@
 package com.doubleciti.laitucao.controller;
 
 import com.doubleciti.laitucao.forms.UserCreateForm;
+import com.doubleciti.laitucao.service.PostService;
 import com.doubleciti.laitucao.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,14 +28,18 @@ public class HomeController {
 
     private final UserService userService;
 
+    private final PostService postService;
+
     @Autowired
-    public HomeController(UserService userService) {
+    public HomeController(UserService userService,
+                          PostService postService) {
         this.userService = userService;
+        this.postService = postService;
     }
 
     @RequestMapping(value="/", method = RequestMethod.GET)
     public String index(Map<String, Object> model) {
-//        model.put("postList", postRepository.findAll());
+        model.put("postList", postService.getAllPosts());
         return "posts/index";
     }
 
