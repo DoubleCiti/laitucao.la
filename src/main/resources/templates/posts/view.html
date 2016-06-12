@@ -2,11 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="layout">
 <head>
-    <title>${title}</title>
+    <title>吐槽</title>
 </head>
 <body>
 <div layout:fragment="content">
-    <img th:src="@{${post.link}}" />
+    <img th:src="${post.link}" />
 </div>
 </body>
 </html>
