@@ -3,7 +3,7 @@ package com.doubleciti.laitucao.controller;
 import com.doubleciti.laitucao.domain.CurrentUser;
 import com.doubleciti.laitucao.domain.Post;
 import com.doubleciti.laitucao.domain.User;
-import com.doubleciti.laitucao.forms.PostCreateForm;
+import com.doubleciti.laitucao.form.PostCreateForm;
 import com.doubleciti.laitucao.service.PostService;
 import com.doubleciti.laitucao.service.UserService;
 import org.slf4j.Logger;

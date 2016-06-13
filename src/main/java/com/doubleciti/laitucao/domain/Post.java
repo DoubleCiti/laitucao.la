@@ -10,6 +10,9 @@ public class Post {
     @Column(name = "id", nullable = false, updatable = false)
     private Long id;
 
+    @Column(name = "title", nullable = false)
+    private String title;
+
     @Column(name = "link", nullable = false)
     private String link;
 
@@ -46,5 +49,13 @@ public class Post {
     @Override
     public String toString() {
         return String.format("Post[id=%s, link=%s]", id, link);
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

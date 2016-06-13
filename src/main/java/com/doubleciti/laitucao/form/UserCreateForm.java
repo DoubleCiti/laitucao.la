@@ -1,18 +1,26 @@
-package com.doubleciti.laitucao.forms;
+package com.doubleciti.laitucao.form;
 
 import com.doubleciti.laitucao.domain.Role;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 public class UserCreateForm {
     @NotEmpty
     private String email = "";
 
     @NotEmpty
+    @Size(min = 5, max = 12)
+    private String username = "";
+
+    @NotEmpty
+    @Min(6)
     private String password = "";
 
     @NotEmpty
+    @Min(6)
     private String passwordRepeated = "";
 
     @NotNull
@@ -33,8 +41,6 @@ public class UserCreateForm {
     public void setUsername(String username) {
         this.username = username;
     }
-
-    private String username;
 
     public String getEmail() {
         return email;

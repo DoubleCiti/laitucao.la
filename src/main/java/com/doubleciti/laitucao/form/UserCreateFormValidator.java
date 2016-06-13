@@ -1,4 +1,4 @@
-package com.doubleciti.laitucao.forms;
+package com.doubleciti.laitucao.form;
 
 import com.doubleciti.laitucao.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
