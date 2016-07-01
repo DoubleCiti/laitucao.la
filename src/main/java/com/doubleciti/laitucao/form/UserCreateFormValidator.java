@@ -1,4 +1,4 @@
-package com.doubleciti.laitucao.forms;
+package com.doubleciti.laitucao.form;
 
 import com.doubleciti.laitucao.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,13 +29,13 @@ public class UserCreateFormValidator implements Validator {
 
     private void validatePasswords(Errors errors, UserCreateForm form) {
         if (!form.getPassword().equals(form.getPasswordRepeated())) {
-            errors.reject("password.no_match", "Passwords do not match");
+            errors.reject("password", "密码不相同");
         }
     }
 
     private void validateEmail(Errors errors, UserCreateForm form) {
         if (userService.getUserByEmail(form.getEmail()).isPresent()) {
-            errors.reject("email.exists", "User with this email already exists");
+            errors.reject("email", "该邮件地址已存在");
         }
     }
 }

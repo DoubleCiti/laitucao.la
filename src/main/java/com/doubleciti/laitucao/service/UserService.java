@@ -1,7 +1,7 @@
 package com.doubleciti.laitucao.service;
 
 import com.doubleciti.laitucao.domain.User;
-import com.doubleciti.laitucao.forms.UserCreateForm;
+import com.doubleciti.laitucao.form.UserCreateForm;
 
 import java.util.Collection;
 import java.util.Optional;

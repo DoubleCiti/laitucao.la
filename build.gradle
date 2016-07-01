@@ -60,5 +60,6 @@ dependencies {
 	compile 'ch.qos.logback:logback-classic:1.1.7'
 	compile 'ch.qos.logback:logback-core:1.1.7'
 	compile 'org.postgresql:postgresql:9.4.1208'
+	compile 'org.xerial:sqlite-jdbc:3.8.11.2'
 	testCompile 'org.springframework.boot:spring-boot-starter-test'
 }

@@ -1,40 +1,48 @@
 package com.doubleciti.laitucao.controller;
 
-import com.doubleciti.laitucao.forms.UserCreateForm;
+import com.doubleciti.laitucao.form.UserCreateForm;
+import com.doubleciti.laitucao.form.UserCreateFormValidator;
+import com.doubleciti.laitucao.form.UserSigninForm;
 import com.doubleciti.laitucao.service.PostService;
 import com.doubleciti.laitucao.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-import javax.validation.Valid;
 import java.util.Map;
 import java.util.Optional;
 
 @Controller
-@Scope("request")
 @RequestMapping(value="/")
-public class HomeController {
+public class HomeController extends WebMvcConfigurerAdapter {
     private static final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
 
     private final UserService userService;
 
     private final PostService postService;
 
+    private final UserCreateFormValidator userCreateFormValidator;
+
     @Autowired
     public HomeController(UserService userService,
-                          PostService postService) {
+                          PostService postService,
+                          UserCreateFormValidator userCreateFormValidator) {
         this.userService = userService;
         this.postService = postService;
+        this.userCreateFormValidator = userCreateFormValidator;
+    }
+
+    @InitBinder("userCreateForm")
+    public void initBinder(WebDataBinder binder) {
+        binder.addValidators(userCreateFormValidator);
     }
 
     @RequestMapping(value="/", method = RequestMethod.GET)
@@ -45,13 +53,13 @@ public class HomeController {
 
     @RequestMapping(value="/signup", method = RequestMethod.GET)
     public String signupGet(Map<String, Object> model) {
-        model.put("form", new UserCreateForm());
+        model.put("userCreateForm", new UserCreateForm());
         return "users/signup";
     }
 
     @RequestMapping(value="/signup", method = RequestMethod.POST)
-    public String signupPost(@Valid @ModelAttribute("form") UserCreateForm form,
-                              BindingResult bindingResult) {
+    public String signupPost(@ModelAttribute("userCreateForm") @Validated UserCreateForm form,
+                             BindingResult bindingResult) {
         LOGGER.debug("Processing user create form={}, bindingResult={}", form, bindingResult);
         if (bindingResult.hasErrors()) {
             return "users/signup";
@@ -59,7 +67,7 @@ public class HomeController {
         try {
             userService.create(form);
         } catch (DataIntegrityViolationException e) {
-            bindingResult.reject("email.exists", "Email already exists");
+            bindingResult.reject("email", "Email already exists");
             return "users/signup";
         }
         return "redirect:/signin";
@@ -68,8 +76,10 @@ public class HomeController {
     @RequestMapping(value="/signin", method = RequestMethod.GET)
     public ModelAndView siginGet(@RequestParam Optional<String> error) {
         if (error.isPresent()) {
-            LOGGER.error(error.get());
+            ModelAndView model = new ModelAndView("users/signin");
+            model.addObject("error", error);
+            model.addObject("userSignForm", new UserSigninForm());
         }
-        return new ModelAndView("users/signin", "error", error);
+        return new ModelAndView("users/signin", "userSignForm", new UserSigninForm());
     }
 }
