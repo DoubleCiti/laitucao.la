@@ -56,7 +56,6 @@ public class PostController extends WebMvcConfigurerAdapter {
                             BindingResult bindingResult,
                             Authentication authentication) {
         if (bindingResult.hasErrors()) {
-            LOGGER.info("error saving post={}", bindingResult.getAllErrors());
             return "posts/create";
         }
         CurrentUser currentUser = (CurrentUser) authentication.getPrincipal();

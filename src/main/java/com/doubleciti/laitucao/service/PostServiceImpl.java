@@ -8,6 +8,7 @@ import com.doubleciti.laitucao.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -55,6 +56,6 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Collection<Post> getAllPosts() {
-        return postRepository.findAll();
+        return postRepository.findAll(new Sort(new Sort.Order(Sort.Direction.DESC, "createdAt")));
     }
 }
