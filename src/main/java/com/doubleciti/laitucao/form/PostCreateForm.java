@@ -1,9 +1,11 @@
 package com.doubleciti.laitucao.form;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.URL;
 
 public class PostCreateForm {
     @NotEmpty
+    @URL(protocol = "http")
     private String link;
 
     @NotEmpty
