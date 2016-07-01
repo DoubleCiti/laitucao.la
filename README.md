@@ -10,3 +10,11 @@
 - [ ] 显示吐槽
 - [ ] 显示最热吐槽
 - [ ] 评论吐槽
+
+## How to run this project
+
+For development, use below command to run gradle task:
+
+```
+SPRING_PROFILES_ACTIVE=dev ./gradlew clean bootRun
+```
