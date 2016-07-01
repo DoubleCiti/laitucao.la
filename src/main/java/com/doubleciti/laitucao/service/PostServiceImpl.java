@@ -10,7 +10,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -42,10 +44,12 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Post create(PostCreateForm form, User user) {
-//
         Post post = new Post(form.getLink());
+        post.setTitle(form.getTitle());
         post.setUser(user);
-        LOGGER.info("save post={}", form.getLink());
+        Timestamp now = new Timestamp(new Date().getTime());
+        post.setCreatedAt(now);
+        post.setUpdatedAt(now);
         return postRepository.save(post);
     }
 

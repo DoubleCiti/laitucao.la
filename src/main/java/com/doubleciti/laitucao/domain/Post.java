@@ -1,6 +1,7 @@
 package com.doubleciti.laitucao.domain;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "posts")
@@ -19,6 +20,12 @@ public class Post {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+    @Column(name = "created_at")
+    private java.sql.Timestamp createdAt;
+
+    @Column(name = "updated_at")
+    private java.sql.Timestamp updatedAt;
 
     public Post() {}
 
@@ -46,16 +53,32 @@ public class Post {
         return link;
     }
 
-    @Override
-    public String toString() {
-        return String.format("Post[id=%s, link=%s]", id, link);
-    }
-
     public String getTitle() {
         return title;
     }
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public Timestamp getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Timestamp getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Timestamp updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Post[id=%s, link=%s]", id, link);
     }
 }

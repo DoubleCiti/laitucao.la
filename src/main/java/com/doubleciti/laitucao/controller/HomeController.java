@@ -1,6 +1,7 @@
 package com.doubleciti.laitucao.controller;
 
 import com.doubleciti.laitucao.form.UserCreateForm;
+import com.doubleciti.laitucao.form.UserCreateFormValidator;
 import com.doubleciti.laitucao.form.UserSigninForm;
 import com.doubleciti.laitucao.service.PostService;
 import com.doubleciti.laitucao.service.UserService;
@@ -11,13 +12,13 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import java.util.Map;
+import java.util.Optional;
 
 @Controller
 @RequestMapping(value="/")
@@ -28,11 +29,20 @@ public class HomeController extends WebMvcConfigurerAdapter {
 
     private final PostService postService;
 
+    private final UserCreateFormValidator userCreateFormValidator;
+
     @Autowired
     public HomeController(UserService userService,
-                          PostService postService) {
+                          PostService postService,
+                          UserCreateFormValidator userCreateFormValidator) {
         this.userService = userService;
         this.postService = postService;
+        this.userCreateFormValidator = userCreateFormValidator;
+    }
+
+    @InitBinder("userCreateForm")
+    public void initBinder(WebDataBinder binder) {
+        binder.addValidators(userCreateFormValidator);
     }
 
     @RequestMapping(value="/", method = RequestMethod.GET)
@@ -43,12 +53,12 @@ public class HomeController extends WebMvcConfigurerAdapter {
 
     @RequestMapping(value="/signup", method = RequestMethod.GET)
     public String signupGet(Map<String, Object> model) {
-        model.put("form", new UserCreateForm());
+        model.put("userCreateForm", new UserCreateForm());
         return "users/signup";
     }
 
     @RequestMapping(value="/signup", method = RequestMethod.POST)
-    public String signupPost(@ModelAttribute("form") @Validated UserCreateForm form,
+    public String signupPost(@ModelAttribute("userCreateForm") @Validated UserCreateForm form,
                              BindingResult bindingResult) {
         LOGGER.debug("Processing user create form={}, bindingResult={}", form, bindingResult);
         if (bindingResult.hasErrors()) {
@@ -64,7 +74,12 @@ public class HomeController extends WebMvcConfigurerAdapter {
     }
 
     @RequestMapping(value="/signin", method = RequestMethod.GET)
-    public ModelAndView siginGet() {
-        return new ModelAndView("users/signin", "form", new UserSigninForm());
+    public ModelAndView siginGet(@RequestParam Optional<String> error) {
+        if (error.isPresent()) {
+            ModelAndView model = new ModelAndView("users/signin");
+            model.addObject("error", error);
+            model.addObject("userSignForm", new UserSigninForm());
+        }
+        return new ModelAndView("users/signin", "userSignForm", new UserSigninForm());
     }
 }

@@ -7,7 +7,7 @@
 <body>
     <div layout:fragment="content">
         <div th:each="post : ${postList}">
-            <p><a href="/posts/1" th:href="@{/posts/{postId}(postId=${post.id})}" th:text="${post.link}">link to post</a></p>
+            <p><a href="/posts/1" th:href="@{/posts/{postId}(postId=${post.id})}" th:text="${post.title}">link to post</a></p>
         </div>
         <p><a th:href="@{/posts}" class="btn btn-default">我要吐槽</a></p>
     </div>
