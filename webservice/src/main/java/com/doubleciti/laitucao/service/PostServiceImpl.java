@@ -2,7 +2,7 @@ package com.doubleciti.laitucao.service;
 
 import com.doubleciti.laitucao.domain.Post;
 import com.doubleciti.laitucao.domain.User;
-import com.doubleciti.laitucao.form.PostCreateForm;
+import com.doubleciti.laitucao.model.PostModel;
 import com.doubleciti.laitucao.repository.PostRepository;
 import com.doubleciti.laitucao.repository.UserRepository;
 import org.slf4j.Logger;
@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PostServiceImpl implements PostService {
@@ -42,9 +44,9 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Post create(PostCreateForm form, User user) {
-        Post post = new Post(form.getLink());
-        post.setTitle(form.getTitle());
+    public Post create(PostModel model, User user) {
+        Post post = new Post(model.getLink());
+        post.setTitle(model.getTitle());
         post.setUser(user);
         Timestamp now = new Timestamp(new Date().getTime());
         post.setCreatedAt(now);
@@ -53,7 +55,10 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Collection<Post> getAllPosts() {
-        return postRepository.findAll(new Sort(new Sort.Order(Sort.Direction.DESC, "createdAt")));
+    public List<PostModel> getAllPosts() {
+        return postRepository.findAll(new Sort(new Sort.Order(Sort.Direction.DESC, "createdAt")))
+                .stream()
+                .map(PostModel::new)
+                .collect(Collectors.toList());
     }
 }

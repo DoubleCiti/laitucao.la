@@ -1,31 +1,19 @@
 package com.doubleciti.laitucao.domain;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 
 @Entity
 @Table(name = "posts")
-public class Post {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false, updatable = false)
-    private Long id;
-
+public class Post extends BaseEntity {
     @Column(name = "title", nullable = false)
     private String title;
 
     @Column(name = "link", nullable = false)
     private String link;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
-
-    @Column(name = "created_at")
-    private java.sql.Timestamp createdAt;
-
-    @Column(name = "updated_at")
-    private java.sql.Timestamp updatedAt;
 
     public Post() {}
 
@@ -39,10 +27,6 @@ public class Post {
 
     public Post(String link) {
         this.link = link;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public void setLink(String link) {
@@ -61,24 +45,8 @@ public class Post {
         this.title = title;
     }
 
-    public Timestamp getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Timestamp createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Timestamp getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Timestamp updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
     @Override
     public String toString() {
-        return String.format("Post[id=%s, link=%s]", id, link);
+        return String.format("Post[id=%s, link=%s]", getId(), link);
     }
 }

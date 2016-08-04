@@ -1,16 +1,14 @@
 package com.doubleciti.laitucao.service;
 
 import com.doubleciti.laitucao.domain.User;
-import com.doubleciti.laitucao.form.UserCreateForm;
+import com.doubleciti.laitucao.model.UserSignupModel;
 import com.doubleciti.laitucao.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Optional;
@@ -41,15 +39,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User create(UserCreateForm form) {
+    public User create(UserSignupModel model) {
         User user = new User();
-        user.setEmail(form.getEmail());
-        user.setPassword(new BCryptPasswordEncoder().encode(form.getPassword()));
-        user.setRole(form.getRole());
-        user.setUsername(form.getUsername());
-        Timestamp now = new Timestamp(new Date().getTime());
-        user.setCreatedAt(now);
-        user.setUpdatedAt(now);
+        user.setEmail(model.getEmail());
+        user.setPassword(model.getPassword());
+        user.setUsername(model.getUsername());
+        user.setCreatedAt(new Date());
+        user.setUpdatedAt(new Date());
         return userRepository.save(user);
     }
 }
