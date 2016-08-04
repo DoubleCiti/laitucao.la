@@ -10,20 +10,20 @@ import com.doubleciti.laitucao.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-import java.util.Map;
+import java.util.Collection;
 import java.util.Optional;
 
-@Controller
+@RestController
 @RequestMapping(value="/posts")
-public class PostController extends WebMvcConfigurerAdapter {
+public class PostController {
     private static final Logger LOGGER = LoggerFactory.getLogger(PostController.class);
 
     private final UserService userService;
@@ -45,35 +45,35 @@ public class PostController extends WebMvcConfigurerAdapter {
         binder.addValidators(postCreateFormValidator);
     }
 
-    @RequestMapping(value="", method=RequestMethod.GET)
-    public String postsGET(Map<String, Object> model) {
-        model.put("postForm", new PostCreateForm());
-        return "posts/create";
+//    @RequestMapping(value="", method=RequestMethod.GET)
+//    public String postsGET(Map<String, Object> model) {
+//        model.put("postForm", new PostCreateForm());
+//        return "posts/create";
+//    }
+
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    Collection<?> listPosts() {
+        return postService.getAllPosts();
     }
 
     @RequestMapping(value="", method=RequestMethod.POST)
-    public String postsPost(@ModelAttribute("postForm") @Validated PostCreateForm form,
-                            BindingResult bindingResult,
-                            Authentication authentication) {
+    ResponseEntity<?> createPost(@ModelAttribute("postForm") @Validated PostCreateForm form,
+                                BindingResult bindingResult,
+                                Authentication authentication) {
         if (bindingResult.hasErrors()) {
-            return "posts/create";
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
         CurrentUser currentUser = (CurrentUser) authentication.getPrincipal();
         Optional<User> user = userService.getUserById(currentUser.getId());
         if (user.isPresent()) {
-            Post post = postService.create(form, user.get());
-            return "redirect:/posts/" + post.getId();
+            postService.create(form, user.get());
+            return new ResponseEntity<>(null, HttpStatus.CREATED);
         }
-        return "posts/create";
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @RequestMapping(value="/{id}", method = RequestMethod.GET)
-    public String view(@PathVariable Long id, Map<String, Object> model) {
-        Optional<Post> post = postService.getPostById(id);
-        if (post.isPresent()) {
-            model.put("post", post.get());
-            return "posts/view";
-        }
-        return "posts/view";
+    Post getPost(@PathVariable Long id) {
+        return postService.getPostById(id);
     }
 }

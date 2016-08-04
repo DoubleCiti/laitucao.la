@@ -3,13 +3,11 @@ package com.doubleciti.laitucao.controller;
 import com.doubleciti.laitucao.form.UserCreateForm;
 import com.doubleciti.laitucao.form.UserCreateFormValidator;
 import com.doubleciti.laitucao.form.UserSigninForm;
-import com.doubleciti.laitucao.service.PostService;
 import com.doubleciti.laitucao.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
@@ -20,35 +18,25 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import java.util.Map;
 import java.util.Optional;
 
-@Controller
+@RestController
 @RequestMapping(value="/")
-public class HomeController extends WebMvcConfigurerAdapter {
-    private static final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
+public class UserController extends WebMvcConfigurerAdapter {
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
     private final UserService userService;
-
-    private final PostService postService;
 
     private final UserCreateFormValidator userCreateFormValidator;
 
     @Autowired
-    public HomeController(UserService userService,
-                          PostService postService,
+    public UserController(UserService userService,
                           UserCreateFormValidator userCreateFormValidator) {
         this.userService = userService;
-        this.postService = postService;
         this.userCreateFormValidator = userCreateFormValidator;
     }
 
     @InitBinder("userCreateForm")
     public void initBinder(WebDataBinder binder) {
         binder.addValidators(userCreateFormValidator);
-    }
-
-    @RequestMapping(value="/", method = RequestMethod.GET)
-    public String index(Map<String, Object> model) {
-        model.put("postList", postService.getAllPosts());
-        return "posts/index";
     }
 
     @RequestMapping(value="/signup", method = RequestMethod.GET)

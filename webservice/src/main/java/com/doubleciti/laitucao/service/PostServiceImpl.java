@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Date;
-import java.util.Optional;
 
 @Service
 public class PostServiceImpl implements PostService {
@@ -33,14 +32,13 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Optional<Post> getPostById(long id) {
-        return Optional.ofNullable(postRepository.findOne(id));
+    public Post getPostById(long id) {
+        return postRepository.findOne(id);
     }
 
     @Override
     public Collection<Post> getAllPostsByUserId(long userId) {
-        User user = userRepository.findOne(userId);
-        return postRepository.findAll();
+        return postRepository.findAllByUserId(userId);
     }
 
     @Override

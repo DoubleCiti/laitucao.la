@@ -5,10 +5,9 @@ import com.doubleciti.laitucao.domain.User;
 import com.doubleciti.laitucao.form.PostCreateForm;
 
 import java.util.Collection;
-import java.util.Optional;
 
 public interface PostService {
-    Optional<Post> getPostById(long id);
+    Post getPostById(long id);
 
     Collection<Post> getAllPostsByUserId(long userId);
 
