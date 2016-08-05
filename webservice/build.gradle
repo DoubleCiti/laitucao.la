@@ -1,0 +1,64 @@
+buildscript {
+	ext {
+		springBootVersion = '1.4.0.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+		classpath 'org.springframework:springloaded:1.2.4.RELEASE'
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'spring-boot'
+apply plugin: 'war'
+apply plugin: 'idea'
+
+war {
+	baseName = 'laitucao.la'
+	version = '1.0.0'
+}
+
+idea {
+	module {
+		inheritOutputDirs = false
+		outputDir = file("$buildDir/classes/main/")
+	}
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+bootRun {
+	addResources = true
+}
+
+configurations {
+	providedRuntime
+}
+
+configurations.all {
+	exclude group: "commons-logging", module: "commons-logging"
+}
+
+dependencies {
+	compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+	compile 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	compile 'org.springframework.boot:spring-boot-starter-web'
+//	compile "org.springframework.boot:spring-boot-starter-security"
+	compile 'org.springframework.boot:spring-boot-devtools'
+	compile 'com.h2database:h2:1.3.148'
+	compile 'org.postgresql:postgresql:9.4.1208'
+	compile 'org.xerial:sqlite-jdbc:3.8.11.2'
+	compile 'io.springfox:springfox-swagger2:2.5.0'
+	compile 'io.springfox:springfox-swagger-ui:2.5.0'
+	compile 'joda-time:joda-time'
+
+	testCompile 'org.springframework.boot:spring-boot-starter-test'
+}
