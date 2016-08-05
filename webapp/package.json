@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "watchify": "watchify -vd -p browserify-hmr -e src/main.js -o dist/build.js",
-    "serve": "http-server -c 1 -a localhost",
+    "serve": "http-server -c 1 -a localhost -p 8081",
     "dev": "npm-run-all --parallel watchify serve",
     "build": "cross-env NODE_ENV=production browserify -e src/main.js | uglifyjs -c warnings=false -m > dist/build.js",
     "lint": "eslint --ext .js,.vue src test/unit",
@@ -45,7 +45,6 @@
     "proxyquireify": "^3.0.1",
     "uglify-js": "^2.5.0",
     "vueify": "^8.5.2",
-    "watchify": "^3.4.0",
-    "foundation": "^4.2.1-1"
+    "watchify": "^3.4.0"
   }
 }

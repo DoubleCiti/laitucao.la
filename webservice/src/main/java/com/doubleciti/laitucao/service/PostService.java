@@ -8,7 +8,7 @@ import java.util.Collection;
 import java.util.List;
 
 public interface PostService {
-    Post getPostById(long id);
+    PostModel getPostById(long id);
 
     Collection<Post> getAllPostsByUserId(long userId);
 

@@ -1,15 +1,15 @@
 <template>
-  <div id="app">
-    <hello></hello>
+  <div id="app" class="container">
+    <posts></posts>
   </div>
 </template>
 
 <script>
-import Hello from './components/Hello.vue'
+import Posts from './components/Posts.vue'
 
 export default {
   components: {
-    Hello
+    Posts
   }
 }
 </script>

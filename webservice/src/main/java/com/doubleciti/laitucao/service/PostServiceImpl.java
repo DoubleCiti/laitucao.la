@@ -34,8 +34,8 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Post getPostById(long id) {
-        return postRepository.findOne(id);
+    public PostModel getPostById(long id) {
+        return new PostModel(postRepository.findOne(id));
     }
 
     @Override
