@@ -1,23 +1,22 @@
 package com.doubleciti.laitucao.service;
 
-import com.doubleciti.laitucao.domain.User;
-import com.doubleciti.laitucao.form.UserCreateForm;
-import com.doubleciti.laitucao.repository.UserRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
-
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Optional;
 
+import com.doubleciti.laitucao.domain.User;
+import com.doubleciti.laitucao.form.UserCreateForm;
+import com.doubleciti.laitucao.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+
 @Service
+@Slf4j
 public class UserServiceImpl implements UserService {
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
     private final UserRepository userRepository;
 
     @Autowired
@@ -27,7 +26,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> getUserById(long id) {
-        return Optional.ofNullable(userRepository.findOne(id));
+        return userRepository.findById(id);
     }
 
     @Override

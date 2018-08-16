@@ -1,5 +1,8 @@
 package com.doubleciti.laitucao.controller;
 
+import java.util.Map;
+import java.util.Optional;
+
 import com.doubleciti.laitucao.domain.CurrentUser;
 import com.doubleciti.laitucao.domain.Post;
 import com.doubleciti.laitucao.domain.User;
@@ -7,25 +10,25 @@ import com.doubleciti.laitucao.form.PostCreateForm;
 import com.doubleciti.laitucao.form.PostCreateFormValidator;
 import com.doubleciti.laitucao.service.PostService;
 import com.doubleciti.laitucao.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Map;
-import java.util.Optional;
-
-@Controller
+@RestController
+@Slf4j
 @RequestMapping(value="/posts")
-public class PostController extends WebMvcConfigurerAdapter {
-    private static final Logger LOGGER = LoggerFactory.getLogger(PostController.class);
-
+public class PostController {
     private final UserService userService;
     private final PostService postService;
 

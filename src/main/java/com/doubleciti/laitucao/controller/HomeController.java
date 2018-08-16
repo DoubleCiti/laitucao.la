@@ -1,28 +1,33 @@
 package com.doubleciti.laitucao.controller;
 
+import java.util.Map;
+import java.util.Optional;
+
 import com.doubleciti.laitucao.form.UserCreateForm;
 import com.doubleciti.laitucao.form.UserCreateFormValidator;
 import com.doubleciti.laitucao.form.UserSigninForm;
 import com.doubleciti.laitucao.service.PostService;
 import com.doubleciti.laitucao.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-import java.util.Map;
-import java.util.Optional;
-
-@Controller
+@RestController
+@Slf4j
 @RequestMapping(value="/")
-public class HomeController extends WebMvcConfigurerAdapter {
+public class HomeController {
     private static final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
 
     private final UserService userService;
