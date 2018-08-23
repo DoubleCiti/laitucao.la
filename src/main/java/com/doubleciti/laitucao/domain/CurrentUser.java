@@ -2,9 +2,6 @@ package com.doubleciti.laitucao.domain;
 
 import org.springframework.security.core.authority.AuthorityUtils;
 
-/**
- * Created by davidx on 12/6/2016.
- */
 public class CurrentUser extends org.springframework.security.core.userdetails.User {
     private User user;
 

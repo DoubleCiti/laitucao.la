@@ -2,7 +2,6 @@ package com.doubleciti.laitucao.service;
 
 import com.doubleciti.laitucao.domain.Post;
 import com.doubleciti.laitucao.domain.User;
-import com.doubleciti.laitucao.form.PostCreateForm;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -12,7 +11,7 @@ public interface PostService {
 
     Collection<Post> getAllPostsByUserId(long userId);
 
-    Post create(PostCreateForm form, User user);
+//    Post create(PostCreateForm form, User user);
 
     Collection<Post> getAllPosts();
 }

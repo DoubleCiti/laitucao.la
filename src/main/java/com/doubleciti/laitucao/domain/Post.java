@@ -3,8 +3,11 @@ package com.doubleciti.laitucao.domain;
 import javax.persistence.*;
 import java.sql.Timestamp;
 
+import lombok.Data;
+
 @Entity
 @Table(name = "posts")
+@Data
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,56 +29,6 @@ public class Post {
 
     @Column(name = "updated_at")
     private java.sql.Timestamp updatedAt;
-
-    public Post() {}
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Post(String link) {
-        this.link = link;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setLink(String link) {
-        this.link = link;
-    }
-
-    public String getLink() {
-        return link;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public Timestamp getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Timestamp createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Timestamp getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Timestamp updatedAt) {
-        this.updatedAt = updatedAt;
-    }
 
     @Override
     public String toString() {

@@ -1,7 +1,9 @@
 package com.doubleciti.laitucao.service;
 
 import com.doubleciti.laitucao.domain.User;
-import com.doubleciti.laitucao.form.UserCreateForm;
+import com.doubleciti.laitucao.model.SignInInfo;
+import com.doubleciti.laitucao.model.SignUpInfo;
+import com.doubleciti.laitucao.model.UserInfo;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -13,5 +15,7 @@ public interface UserService {
 
     Collection<User> getAllUsers();
 
-    User create(UserCreateForm form);
+    UserInfo create(SignUpInfo form);
+
+    UserInfo signIn(final SignInInfo info);
 }

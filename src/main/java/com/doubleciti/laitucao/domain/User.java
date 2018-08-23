@@ -2,10 +2,17 @@ package com.doubleciti.laitucao.domain;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Set;
+
+import com.doubleciti.laitucao.model.UserInfo;
+import lombok.Builder;
+import lombok.Data;
 
 @Entity
 @Table(name = "users")
+@Data
+@Builder
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,78 +33,27 @@ public class User {
     private Role role;
 
     @Column(name = "created_at")
-    private java.sql.Timestamp createdAt;
+    @Builder.Default
+    private java.sql.Timestamp createdAt = new Timestamp(new Date().getTime());
 
     @Column(name = "updated_at")
-    private java.sql.Timestamp updatedAt;
+    @Builder.Default
+    private java.sql.Timestamp updatedAt = new Timestamp(new Date().getTime());
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
     private Set<Post> posts;
-
-    public User() {}
-
-    public Set<Post> getPosts() {
-        return posts;
-    }
-
-    public void setPosts(Set<Post> posts) {
-        this.posts = posts;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Long getId() {
-        return id;
-    }
 
     @Override
     public String toString() {
         return String.format("User[id=%s, email=%s]", id, email);
     }
 
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public Timestamp getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Timestamp updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public Timestamp getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Timestamp createdAt) {
-        this.createdAt = createdAt;
+    public UserInfo toUserInfo() {
+        return UserInfo.builder()
+                .id(id)
+                .email(email)
+                .username(username)
+                .role(role)
+                .build();
     }
 }
