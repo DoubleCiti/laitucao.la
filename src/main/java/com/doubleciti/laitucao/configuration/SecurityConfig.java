@@ -24,18 +24,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/", "/sign_in", "/sign_up", "/h2-console/**").permitAll()
-                .regexMatchers("/posts/[0-9]+").permitAll()
-                .anyRequest().fullyAuthenticated()
-                .and()
-                .logout()
-                .logoutUrl("/signout")
-                .deleteCookies("remember-me")
-                .logoutSuccessUrl("/")
-                .permitAll()
-                .and()
-                .rememberMe();
+//        http.authorizeRequests()
+//                .antMatchers("/", "/sign_in", "/sign_up", "/h2-console/**").permitAll()
+//                .regexMatchers("/posts/[0-9]+").permitAll()
+//                .anyRequest().fullyAuthenticated()
+//                .and()
+//                .logout()
+//                .logoutUrl("/signout")
+//                .deleteCookies("remember-me")
+//                .logoutSuccessUrl("/")
+//                .permitAll()
+//                .and()
+//                .rememberMe();
+        http.authorizeRequests().antMatchers("/**").permitAll();
     }
 
     @Override
